@@ -38,4 +38,10 @@ export class TuiElement extends HTMLElement {
             }
         }
     }
+    moveTaggedChildren(newParent, tag) {
+        let elms = this.querySelectorAll(`${tag}`);
+        for (let i = 0; i < elms.length; i++) {
+            newParent.appendChild(elms[i]); // Appends the new parent node
+        }
+    }
 }

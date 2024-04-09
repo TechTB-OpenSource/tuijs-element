@@ -27,6 +27,7 @@ export class TuiElement extends HTMLElement {
         if (oldValue !== newValue) {
             this[name] = newValue;
             if (this.rendered === true) {
+                this.replaceChildren();
                 this.render();
                 return;
             }

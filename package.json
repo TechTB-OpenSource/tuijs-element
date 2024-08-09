@@ -1,10 +1,7 @@
 {
-  "name": "tui",
+  "name": "tuijs",
   "version": "0.0.5",
   "description": "A small web component framework for building JavaScript UIs.",
   "main": "./src/index.js",
-  "type": "module",
-  "dependencies": {
-    "ttbjs": "^1.0.1"
-  }
+  "type": "module"
 }

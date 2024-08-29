@@ -7,6 +7,10 @@ export class TuiElement extends HTMLElement {
         // The attribute length must be stored in a separate variable so that it can be manipulated.
         this.attributeLength = this.attributes.length;
     }
+
+    /**
+     * Extension of HTMLElement method 'connectedCallback'.
+     */
     connectedCallback() {
         /**
          * If render requested is equal to true, or the attribute length is observed to be 0
@@ -17,6 +21,15 @@ export class TuiElement extends HTMLElement {
             this.rendered = true;
         }
     }
+
+    /**
+     * Extension of HTMLElement method 'attributeChangedCallback'.
+     * Observes element changes
+     * @param {*} name 
+     * @param {*} oldValue 
+     * @param {*} newValue 
+     * @returns 
+     */
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
             this[name] = newValue; // Set the new value
@@ -49,14 +62,17 @@ export class TuiElement extends HTMLElement {
             }
         }
     }
+
     /**
-     * This method is used to move HTML elements placed inside the custom element tags,
-     * to another element withing the custom element.
+     * This method is used to move HTML elements placed inside the custom element tags to another element withing the custom element.
      * 
-     * For example, if you have an un-ordered list 'ul' as a child element of the custom element,
+     * Example; if you have an un-ordered list 'ul' as a child element of the custom element,
      * you can move list item 'li' tags withing the 'ul'
      * 
      * If more than one tag type needs to be moved, this method can be run twice by the child class.
+     * @param {Object} newParent - The target new parent element for the tags to be moved to.
+     * @param {String} tag - The tag type that will be moved from the parent to the newParent.
+     * @returns {void}
      */
     moveTaggedChildren(newParent, tag) {
         let elms = this.querySelectorAll(`${tag}`);
@@ -65,19 +81,14 @@ export class TuiElement extends HTMLElement {
             fragment.appendChild(elm); // Append to fragment
         });
         newParent.appendChild(fragment); // Append all at once to reduce reflows
-    }
-    /**
-     * 
-     * This is an older version of 'moveTaggedChildren'
-     *
-     */
-    moveTaggedChildrenOLD(newParent, tag) {
-        let elms = this.querySelectorAll(`${tag}`);
-        for (let i = 0; i < elms.length; i++) {
-            newParent.appendChild(elms[i]); // Appends the new parent node
-        }
+        return;
     }
 
+    /**
+     * Moves text nodes of the parent element to a specified child element
+     * @param {Object} childElement - The target child element where the text will be moved
+     * @returns {void}
+     */
     moveTextToChild(childElement) {
         let directText = ""; // Initialize a variable to store the direct text
         // Iterate over child nodes of the parent element
@@ -89,6 +100,7 @@ export class TuiElement extends HTMLElement {
         }
         directText = directText.trim();// Trim any trailing whitespace
         childElement.innerText = directText;
+        return;
     }
 
     /**
@@ -108,5 +120,6 @@ export class TuiElement extends HTMLElement {
                 children[i].remove();
             }
         }
+        return;
     }
 }

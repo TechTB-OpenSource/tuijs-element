@@ -1,7 +1,10 @@
 {
   "name": "tuijs",
-  "version": "0.0.6",
-  "description": "A small web component framework for building JavaScript UIs.",
+  "version": "0.0.7",
   "main": "./src/index.js",
-  "type": "module"
+  "description": "A small web component framework for building JavaScript UIs.",
+  "author": "TechTB LLC",
+  "license": "MIT",
+  "type": "module",
+  "repository": "github:TechTB-OpenSource/tuijs"
 }

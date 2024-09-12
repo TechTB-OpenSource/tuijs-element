@@ -1,6 +1,6 @@
 {
   "name": "tuijs",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": "./src/index.js",
   "description": "A small web component framework for building JavaScript UIs.",
   "author": "TechTB LLC",

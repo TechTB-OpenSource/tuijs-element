@@ -17,8 +17,8 @@ import { TuiElement } from 'tuijs';
 export class ColorBox extends TuiElement {
     constructor() {
         super();
-        this.color1 = this.getAttribute('color-1') || 'red';
-        this.color2 = this.getAttribute('color-2') || 'blue';
+        this.color1 = this.getAttribute('color-1');
+        this.color2 = this.getAttribute('color-2');
     }
     static get observedAttributes() {
         return ['color-1', 'color-2'];
@@ -42,9 +42,6 @@ export class ColorBox extends TuiElement {
     }
 }
 customElements.define('color-box', ColorBox);
-
-let elm = elmCleaner(`<color-box color-2="green"></color-box>`);
-document.body.appendChild(elm);
 ```
 
 ## Example Project Code
@@ -54,6 +51,6 @@ index.js
 import { elmCleaner } from 'tuijs-util';
 import { ColorBox } from './comp.js';
 
-let elm = elmCleaner(`<color-box color-2="green"></color-box>`);
+let elm = elmCleaner(`<color-box color-1="red" color-2="green"></color-box>`);
 document.body.appendChild(elm);
 ```

@@ -1,0 +1,14 @@
+{
+  "author": "TechTB LLC",
+  "type": "module",
+  "dependencies": {
+    "tuijs": "^0.0.7",
+    "tuijs-util": "^1.2.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "rollup": "^4.21.3",
+    "rollup-plugin-copy": "^3.5.0"
+  }
+}

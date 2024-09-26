@@ -1,5 +1,5 @@
 import { elmCleaner, parseTemplate } from 'tuijs-util';
-import { TuiElement } from 'tuijs';
+import { TuiElement } from 'tuijs-element';
 
 let elm = elmCleaner(`<color-box color-1="red" color-2="green"></color-box>`);
 document.body.appendChild(elm);

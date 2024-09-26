@@ -2,7 +2,7 @@
   "author": "TechTB LLC",
   "type": "module",
   "dependencies": {
-    "tuijs": "^0.0.7",
+    "tuijs-element": "^0.0.7",
     "tuijs-util": "^1.2.0"
   },
   "devDependencies": {

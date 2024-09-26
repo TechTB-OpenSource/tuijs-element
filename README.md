@@ -1,6 +1,6 @@
-# TUIJS
+# TUIJS-Element
 ## A small web component framework for building JavaScript UIs.
-***TUIJS is built on modules. A bundler is recommended.***
+***TUIJS-Element is built on modules. A bundler is recommended.***
 
 ***Last Updated 08/29/2024***
 
@@ -12,7 +12,7 @@ The general idea is prevent re-rendering of an element every time an attribute c
 comp.js
 ```js
 import { parseTemplate } from 'tuijs-util';
-import { TuiElement } from 'tuijs';
+import { TuiElement } from 'tuijs-element';
 
 export class ColorBox extends TuiElement {
     constructor() {

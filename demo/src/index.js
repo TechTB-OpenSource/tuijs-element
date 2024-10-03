@@ -7,8 +7,6 @@ document.body.appendChild(elm);
 class ColorBox extends TuiElement {
     constructor() {
         super();
-        this.color1 = this.getAttribute('color-1');
-        this.color2 = this.getAttribute('color-2');
     }
     static get observedAttributes() {
         return ['color-1', 'color-2'];
@@ -17,8 +15,22 @@ class ColorBox extends TuiElement {
         console.log(`RENDER`)
         let elmTemplate = /*HTML*/`
             <template>
-                <div style="height: 64px;width: 64px;background-color: ${this.color1}">
-                    <p style="color: black">Color Box<p>
+                <style>
+                    .box {
+                        height: 128px;
+                        width: 128px;
+                        margin: 32px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .box p {
+                        text-align: center;
+                        color: black;
+                    }
+                </style>
+                <div class="box" style="background-color: ${this.getAttribute('color-1')};">
+                    <p>Color Box<p>
                 <div>
             </template>
         `;
@@ -28,7 +40,11 @@ class ColorBox extends TuiElement {
     }
     handleButtonClick() {
         const div = this.querySelector('div');
-        div.style.backgroundColor = this.color2;
+        if (div.style.backgroundColor === this.getAttribute('color-1')) {
+            div.style.backgroundColor = this.getAttribute('color-2');
+            return;
+        }
+        div.style.backgroundColor = this.getAttribute('color-1');
         return;
     }
 }

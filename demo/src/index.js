@@ -14,6 +14,7 @@ class ColorBox extends TuiElement {
         return ['color-1', 'color-2'];
     }
     render() {
+        console.log(`RENDER`)
         let elmTemplate = /*HTML*/`
             <template>
                 <div style="height: 64px;width: 64px;background-color: ${this.color1}">

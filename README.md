@@ -18,14 +18,17 @@ removeTrackedEvent(element, eventType, callback);
 removedAllTrackedEvents();
 ```
 
-## Example Class
-***'parseTemplate' is a parser function available in tuijs-util***
-comp.js
+## Example Project Code
+***The 'elmCleaner' and 'parseTemplate' functions are utility functions provided by tuijs-util***
+index.js
 ```js
-import { parseTemplate } from 'tuijs-util';
+import { elmCleaner, parseTemplate } from 'tuijs-util';
 import { TuiElement } from 'tuijs-element';
 
-export class ColorBox extends TuiElement {
+let elm = elmCleaner(`<color-box color-1="red" color-2="green"></color-box>`);
+document.body.appendChild(elm);
+
+class ColorBox extends TuiElement {
     constructor() {
         super();
         this.color1 = this.getAttribute('color-1');
@@ -43,7 +46,7 @@ export class ColorBox extends TuiElement {
             </template>
         `;
         this.appendChild(parseTemplate(elmTemplate));
-        this.addEventListener('click', () => this.handleButtonClick());
+        super.addTrackedEvent(this, 'click', () => this.handleButtonClick());
         return;
     }
     handleButtonClick() {
@@ -53,15 +56,4 @@ export class ColorBox extends TuiElement {
     }
 }
 customElements.define('color-box', ColorBox);
-```
-
-## Example Project Code
-***'elmCleaner' is a utility function provided by tuijs-util***
-index.js
-```js
-import { elmCleaner } from 'tuijs-util';
-import { ColorBox } from './comp.js';
-
-let elm = elmCleaner(`<color-box color-1="red" color-2="green"></color-box>`);
-document.body.appendChild(elm);
 ```

@@ -1,14 +1,25 @@
 # TUIJS-Element
 ## A small web component framework for building JavaScript UIs.
-***TUIJS-Element is built on modules. A bundler is recommended.***
+***TUIJS-Element is built on ES Modules.***
 
-***Last Updated 08/29/2024***
+***Last Updated 10/03/2024***
 
-## Notes
-The general idea is prevent re-rendering of an element every time an attribute change is observed. This will allow developers to create custom element classes which have attribute observes that can be added to a JS project as template literals with custom attributes included.
+## Rendering
+- The general idea is prevent the first render from occurring until all of the initial observed attributes are accounted for. This will allow the creation of custom elements that have non-standard HTML attributes, which can be used for any desired purpose. ***You cannot currently add standard HTML attributes. This will be capability will be added in a future patch.***
+
+## Event Listeners
+- TUIJS-Element has built in methods to handle event listeners. In order for the event listeners to be removed automatically with the 'disconnectedCallback' method, the custom event listener methods must be used.
+- Only the 'addTrackedEvent' method is required, as 'removedAllTrackedEvents' will be run during the 'disconnectedCallback', but the other methods are available for manual manipulation if desired.
+These methods are listed below. 
+
+```js
+addTrackedEvent(element, eventType, callback);
+removeTrackedEvent(element, eventType, callback);
+removedAllTrackedEvents();
+```
 
 ## Example Class
-***The 'parseTemplate' function is a util provided by tuijs-util***
+***'parseTemplate' is a parser function available in tuijs-util***
 comp.js
 ```js
 import { parseTemplate } from 'tuijs-util';
@@ -45,7 +56,7 @@ customElements.define('color-box', ColorBox);
 ```
 
 ## Example Project Code
-***The 'elmCleaner' function is a util provided by tuijs-util***
+***'elmCleaner' is a utility function provided by tuijs-util***
 index.js
 ```js
 import { elmCleaner } from 'tuijs-util';

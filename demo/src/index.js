@@ -3,6 +3,7 @@ import { TuiElement } from 'tuijs-element';
 
 let elm = elmCleaner(`<color-box color-1="red" color-2="green"></color-box>`);
 document.body.appendChild(elm);
+
 class ColorBox extends TuiElement {
     constructor() {
         super();
@@ -21,7 +22,7 @@ class ColorBox extends TuiElement {
             </template>
         `;
         this.appendChild(parseTemplate(elmTemplate));
-        this.addEventListener('click', () => this.handleButtonClick());
+        super.addTrackedEvent(this, 'click', () => this.handleButtonClick());
         return;
     }
     handleButtonClick() {

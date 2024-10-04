@@ -8,19 +8,16 @@
 - The general idea is prevent the first render from occurring until all of the initial observed attributes are accounted for. This will allow the creation of custom elements that have non-standard HTML attributes, which can be used for any desired purpose. ***You cannot currently add standard HTML attributes. This capability will be added in a future patch.***
 
 ## Event Listeners
-- TUIJS-Element has built in methods to handle event listeners. In order for the event listeners to be removed automatically with the 'disconnectedCallback' method, the custom event listener methods must be used.
-- Only the 'addTrackedEvent' method is required, as 'removedAllTrackedEvents' will be run during the 'disconnectedCallback', but the other methods are available for manual manipulation if desired.
-These methods are listed below. 
-
+- TUIJS-Element has methods to handle event listeners. In order for the event listeners to be removed automatically with the 'disconnectedCallback' or 'attributeChangedCallback' methods, the 'addTrackedEvent' methods must be used.
+- The 'removeTrackedEvent' and 'removeAllTrackedEvents' methods are also available for manual manipulation if needed.
 ```js
 addTrackedEvent(element, eventType, callback);
 removeTrackedEvent(element, eventType, callback);
-removedAllTrackedEvents();
+removeAllTrackedEvents();
 ```
 
 ## Example Project Code
 ***The 'elmCleaner' and 'parseTemplate' functions are utility functions provided by tuijs-util***
-index.js
 ```js
 import { elmCleaner, parseTemplate } from 'tuijs-util';
 import { TuiElement } from 'tuijs-element';
@@ -31,12 +28,13 @@ document.body.appendChild(elm);
 class ColorBox extends TuiElement {
     constructor() {
         super();
+        this.text = this.innerHTML;
     }
     static get observedAttributes() {
         return ['color-1', 'color-2'];
     }
     render() {
-        console.log(`RENDER`)
+        console.log(`RENDER`);
         let elmTemplate = /*HTML*/`
             <template>
                 <style>
@@ -53,22 +51,22 @@ class ColorBox extends TuiElement {
                         color: black;
                     }
                 </style>
-                <div class="box" style="background-color: ${this.getAttribute('color-1')};">
-                    <p>Color Box<p>
-                <div>
+                <p>${this.text}</p>
             </template>
         `;
+        this.classList.add('box');
+        this.style.backgroundColor = `${this.getAttribute('color-1')}`;
+        this.innerText = '';
         this.appendChild(parseTemplate(elmTemplate));
         super.addTrackedEvent(this, 'click', () => this.handleButtonClick());
         return;
     }
     handleButtonClick() {
-        const div = this.querySelector('div');
-        if (div.style.backgroundColor === this.getAttribute('color-1')) {
-            div.style.backgroundColor = this.getAttribute('color-2');
+        if (this.style.backgroundColor === this.getAttribute('color-1')) {
+            this.style.backgroundColor = this.getAttribute('color-2');
             return;
         }
-        div.style.backgroundColor = this.getAttribute('color-1');
+        this.style.backgroundColor = this.getAttribute('color-1');
         return;
     }
 }

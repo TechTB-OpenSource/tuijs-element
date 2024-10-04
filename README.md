@@ -5,11 +5,24 @@
 ***Last Updated 10/03/2024***
 
 ## Rendering
-- The general idea is prevent the first render from occurring until all of the initial observed attributes are accounted for. This will allow the creation of custom elements that have non-standard HTML attributes, which can be used for any desired purpose. ***You cannot currently add standard HTML attributes. This capability will be added in a future patch.***
+- The general idea is to use an attribute counter to prevent the first render from occurring until all of the initial observed custom attributes are accounted for. This will allow the creation of custom elements that have non-standard HTML attributes, which can be used for any desired purpose. So if you have created an element with three custom attributes, the element will only render after the 'attributeChangedCallback' method has been called three times for each initial attribute.  ***You cannot currently add standard HTML attributes. This capability will be added in a future patch.***
+- The element will re-render for every change after the first render.
+
+## Programmatic Changes After Render
+- To change the element after the first render, you must do so in a way that will trigger the 'attributeChangedCallback'. This means that you will need to use 'setAttribute' to change the attribute value.
+This WILL work.
+```js
+element.setAttribute('custom-attribute', 'value');
+```
+This WILL NOT work.
+```js
+element['custom-attribute'] = 'value';
+```
 
 ## Event Listeners
 - TUIJS-Element has methods to handle event listeners. In order for the event listeners to be removed automatically with the 'disconnectedCallback' or 'attributeChangedCallback' methods, the 'addTrackedEvent' methods must be used.
 - The 'removeTrackedEvent' and 'removeAllTrackedEvents' methods are also available for manual manipulation if needed.
+
 ```js
 addTrackedEvent(element, eventType, callback);
 removeTrackedEvent(element, eventType, callback);

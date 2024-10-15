@@ -50,7 +50,10 @@ export class TuiElement extends HTMLElement {
      */
     attributeChangedCallback(name, oldValue, newValue) {
         try {
-            console.log(`attributeChangedCallback: START`)
+            console.log(`attributeChangedCallback: START`);
+            if (name === 'class') {
+                this.attributeCount--;
+            }
             if (oldValue !== newValue) {
                 this[name] = newValue; // Set the new value
                 /**

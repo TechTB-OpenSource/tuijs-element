@@ -6,6 +6,18 @@ export class TuiElement extends HTMLElement {
         this.rendered = false;
         this.attributeLength = this.attributes.length; // The attribute length must be stored in a separate variable so that it can be manipulated.
         this.trackedListeners = [];
+        this.defaultAttributes = [
+            'id',
+            'name',
+            'class',
+            'data',
+            'disabled'
+        ];
+        for (let i = 0; i < this.defaultAttributes.length; i++) {
+            if (this.getAttribute(`${this.defaultAttributes[i]}`)) {
+                this.attributeLength--;
+            }
+        }
     }
 
     /**
@@ -30,7 +42,7 @@ export class TuiElement extends HTMLElement {
      */
     disconnectedCallback() {
         try {
-            this.removedAllTrackedEvents();
+            this.removeAllTrackedEvents();
         } catch (er) {
             throw new Error(er.message);
         }
@@ -56,10 +68,12 @@ export class TuiElement extends HTMLElement {
                     // If the shadow root is used, render on the shadow root context and not the this context
                     if (this.shadowRoot) {
                         this.shadowRoot.replaceChildren(); // This clears the element in prep for rerender - DO NOT REMOVE
+                        this.shadowRoot.removeAllTrackedEvents();
                         this.render();
                         return;
                     }
                     this.replaceChildren(); // This clears the element in prep for rerender - DO NOT REMOVE
+                    this.removeAllTrackedEvents();
                     this.render();
                     return;
                 }
@@ -101,29 +115,6 @@ export class TuiElement extends HTMLElement {
                 fragment.appendChild(elm); // Append to fragment
             });
             newParent.appendChild(fragment); // Append all at once to reduce reflows
-            return;
-        } catch (er) {
-            throw new Error(er.message);
-        }
-    }
-
-    /**
-     * Moves text nodes of the parent element to a specified child element
-     * @param {Object} childElement - The target child element where the text will be moved
-     * @returns {void}
-     */
-    moveTextToChild(childElement) {
-        try {
-            let directText = ""; // Initialize a variable to store the direct text
-            // Iterate over child nodes of the parent element
-            for (const node of this.childNodes) {
-                if (node.nodeType === Node.TEXT_NODE) {
-                    directText += node.textContent.trim() + " "; // Append the trimmed text content to the directText variable
-                    this.removeChild(node); // Remove the text node from the parent element
-                }
-            }
-            directText = directText.trim();// Trim any trailing whitespace
-            childElement.innerText = directText;
             return;
         } catch (er) {
             throw new Error(er.message);
@@ -191,7 +182,7 @@ export class TuiElement extends HTMLElement {
         }
     }
 
-    removedAllTrackedEvents() {
+    removeAllTrackedEvents() {
         try {
             this.trackedListeners.forEach(({ element, eventType, callback }) => {
                 element.removeEventListener(eventType, callback);

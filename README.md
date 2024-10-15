@@ -2,11 +2,20 @@
 ## A small web component framework for building JavaScript UIs.
 ***TUIJS-Element is built on ES Modules.***
 
-***Last Updated 10/03/2024***
+***Last Updated 10/15/2024***
 
 ## Rendering
-- The general idea is to use an attribute counter to prevent the first render from occurring until all of the initial observed custom attributes are accounted for. This will allow the creation of custom elements that have non-standard HTML attributes, which can be used for any desired purpose. So if you have created an element with three custom attributes, the element will only render after the 'attributeChangedCallback' method has been called three times for each initial attribute.  ***You cannot currently add standard HTML attributes. This capability will be added in a future patch.***
+- The general idea is to use an attribute counter to prevent the first render from occurring until all of the initial observed custom attributes are accounted for. This will allow the creation of custom elements that have non-standard HTML attributes, which can be used for any desired purpose. So if you have created an element with three custom attributes, the element will only render after the 'attributeChangedCallback' method has been called three times for each initial attribute.
 - The element will re-render for every change after the first render.
+***TUIJS-Element only supports the following default HTML attributes being attached to a custom element.***
+- id
+- name
+- class
+- data
+- disabled
+
+# DO NOT OBSERVE DEFAULT HTML ELEMENTS! IT WILL CAUSE A LOOP THAT WILL CRASH YOUR BROWSER!
+
 
 ## Programmatic Changes After Render
 - To change the element after the first render, you must do so in a way that will trigger the 'attributeChangedCallback'. This means that you will need to use 'setAttribute' to change the attribute value.
@@ -30,12 +39,18 @@ removeAllTrackedEvents();
 ```
 
 ## Example Project Code
-***The 'elmCleaner' and 'parseTemplate' functions are utility functions provided by tuijs-util***
+Demo Location: https://github.com/TechTB-OpenSource/tuijs-element
+***The 'parseTemplate' function is a utility functions provided in tuijs-util.***
 ```js
-import { elmCleaner, parseTemplate } from 'tuijs-util';
+import { parseTemplate } from 'tuijs-util';
 import { TuiElement } from 'tuijs-element';
 
-let elm = elmCleaner(`<color-box color-1="red" color-2="green"></color-box>`);
+let elm = parseTemplate(`
+        <template>
+            <color-box id="color-box-2" color-1="red" color-2="green"></color-box>
+        <template>
+    `);
+elm.innerText = 'Color Box 2';
 document.body.appendChild(elm);
 
 class ColorBox extends TuiElement {

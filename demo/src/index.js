@@ -1,7 +1,7 @@
 import { elmCleaner, parseTemplate } from 'tuijs-util';
 import { TuiElement } from 'tuijs-element';
 
-let elm = elmCleaner(`<color-box color-1="red" color-2="green"></color-box>`);
+let elm = elmCleaner(`<color-box id="color-box-2" color-1="red" color-2="green"></color-box>`);
 elm.innerText = 'Color Box 2';
 document.body.appendChild(elm);
 

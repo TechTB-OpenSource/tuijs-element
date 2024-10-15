@@ -6,6 +6,18 @@ export class TuiElement extends HTMLElement {
         this.rendered = false;
         this.attributeLength = this.attributes.length; // The attribute length must be stored in a separate variable so that it can be manipulated.
         this.trackedListeners = [];
+        this.defaultAttributes = [
+            'id',
+            'name',
+            'class',
+            'data',
+            'disabled'
+        ];
+        for (let i = 0; i < this.defaultAttributes.length; i++) {
+            if (this.getAttribute(`${this.defaultAttributes[i]}`)) {
+                this.attributeLength--;
+            }
+        }
     }
 
     /**
@@ -18,8 +30,6 @@ export class TuiElement extends HTMLElement {
                 this.render();
                 this.rendered = true;
             }
-            console.log(`connectedCallback`);
-            console.log(this.trackedListeners);
             return;
         } catch (er) {
             throw new Error(er.message);
@@ -33,8 +43,6 @@ export class TuiElement extends HTMLElement {
     disconnectedCallback() {
         try {
             this.removeAllTrackedEvents();
-            console.log(`disconnectedCallback`);
-            console.log(this.trackedListeners);
         } catch (er) {
             throw new Error(er.message);
         }
@@ -50,10 +58,6 @@ export class TuiElement extends HTMLElement {
      */
     attributeChangedCallback(name, oldValue, newValue) {
         try {
-            console.log(`attributeChangedCallback: START`);
-            if (name === 'class') {
-                this.attributeCount--;
-            }
             if (oldValue !== newValue) {
                 this[name] = newValue; // Set the new value
                 /**

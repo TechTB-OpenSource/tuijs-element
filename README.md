@@ -11,8 +11,6 @@
 - id
 - name
 - class
-- data
-- disabled
 
 # DO NOT OBSERVE DEFAULT HTML ELEMENTS! IT WILL CAUSE A LOOP THAT WILL CRASH YOUR BROWSER!
 

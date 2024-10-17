@@ -9,9 +9,7 @@ export class TuiElement extends HTMLElement {
         this.defaultAttributes = [
             'id',
             'name',
-            'class',
-            'data',
-            'disabled'
+            'class'
         ];
         for (let i = 0; i < this.defaultAttributes.length; i++) {
             if (this.getAttribute(`${this.defaultAttributes[i]}`)) {
